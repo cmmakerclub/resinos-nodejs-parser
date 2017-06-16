@@ -7,6 +7,14 @@ const mqtt = require('mqtt');
 const client = mqtt.connect('mqtt://mqtt.cmmc.io');
 const moment = require('moment');
 
+// const MQTT_SUB_TOPIC = process.env.TARGET_BAUDRATE)
+const CONFIG = {
+    MQTT: {
+        SUB_TOPIC: process.env.MQTT_SUB_TOPIC,
+        PUB_TOPIC: process.env.MQTT_PUB_TOPIC
+    }
+};
+
 let checksum = (message) => {
     let calculatedSum = 0;
     let checkSum = message[message.length - 1];
@@ -19,7 +27,8 @@ let checksum = (message) => {
 };
 
 client.on('connect', function() {
-    client.subscribe('CMMC/espnow/#');
+    console.log(`mqtt connected.`);
+    client.subscribe(CONFIG.MQTT.SUB_TOPIC);
 });
 
 client.on('message', function(topic, message) {
@@ -28,9 +37,9 @@ client.on('message', function(topic, message) {
         message = message.slice(0, message.length - 1);
     }
 
-    console.log(message);
-    console.log('================');
-    console.log(message.length);
+    // console.log(message);
+    // console.log('================');
+    // console.log(message.length);
 
     let statusObject = {};
     if (checksum(message)) {
