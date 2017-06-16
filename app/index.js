@@ -3,8 +3,6 @@
 const chalk = require('chalk');
 console.log(`Hello world ${new Date()}`);
 
-
-export default (a, b) => a + b
 const mqtt = require('mqtt');
 const client = mqtt.connect('mqtt://mqtt.cmmc.io');
 const moment = require('moment');
