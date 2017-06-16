@@ -3,6 +3,7 @@
 const CONFIG = {
     MQTT: {
         SUB_TOPIC: process.env.MQTT_SUB_TOPIC || "NAT/test/espnow",
+        PUB_PREFIX: process.env.MQTT_PUB_PREFIX || "ESPNOW",
         PUB_TOPIC: process.env.MQTT_PUB_TOPIC,
         HOST: process.env.MQTT_HOST || "mqtt.cmmc.io"
     }
@@ -33,7 +34,7 @@ client.on('connect', function() {
 });
 
 client.on('message', function(topic, message) {
-    console.log(`==================================`)
+    console.log(`==================================`);
     console.log(`orig message =     `, message);
 
     // rhythm 0d 0a $
@@ -69,7 +70,7 @@ client.on('message', function(topic, message) {
                     payload.readUInt32LE(23) || 0
                 ];
 
-                console.log(`==================================`)
+                console.log(`==================================`);
                 console.log(`type = `, type);
                 console.log(`name = `, name.toString());
                 console.log(`val1 = `, val1);
@@ -78,7 +79,7 @@ client.on('message', function(topic, message) {
                 console.log(`batt = `, batt);
                 console.log(`[master] mac1 = `, mac1String);
                 console.log(`[ slave] mac2 = `, mac2String);
-                console.log(`==================================`)
+                console.log(`==================================`);
 
                 statusObject.myName = name.toString();
                 statusObject.type = type.toString('hex');
@@ -95,8 +96,8 @@ client.on('message', function(topic, message) {
 
                 console.log(chalk.bold(`being published..`));
                 let pubTopics = [
-                    `CMMC/espnow/${mac1String}/${mac2String}/status`,
-                    `CMMC/espnow/${mac1String}/${name.toString()}/status`
+                    `${CONFIG.MQTT.PUB_PREFIX}/${mac1String}/${mac2String}/status`,
+                    `${CONFIG.MQTT.PUB_PREFIX}/${mac1String}/${name.toString()}/status`
                 ].forEach((topic, idx) => {
                     console.log(`published to ${chalk.green(topic)}`);
                     client.publish(topic, serializedObjectJsonString, {retain: true});
