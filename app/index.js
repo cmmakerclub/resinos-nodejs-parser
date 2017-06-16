@@ -3,7 +3,7 @@
 const CONFIG = {
     MQTT: {
         SUB_TOPIC: process.env.MQTT_SUB_TOPIC || "NAT/test/espnow",
-        PUB_PREFIX: process.env.MQTT_PUB_PREFIX || "ESPNOW",
+        PUB_PREFIX: process.env.MQTT_PUB_PREFIX || "ESPNOW/",
         PUB_TOPIC: process.env.MQTT_PUB_TOPIC,
         HOST: process.env.MQTT_HOST || "mqtt.cmmc.io"
     }
@@ -96,8 +96,8 @@ client.on('message', function(topic, message) {
 
                 console.log(chalk.bold(`being published..`));
                 let pubTopics = [
-                    `${CONFIG.MQTT.PUB_PREFIX}/${mac1String}/${mac2String}/status`,
-                    `${CONFIG.MQTT.PUB_PREFIX}/${mac1String}/${name.toString()}/status`
+                    `${CONFIG.MQTT.PUB_PREFIX}${mac1String}/${mac2String}/status`,
+                    `${CONFIG.MQTT.PUB_PREFIX}${mac1String}/${name.toString()}/status`
                 ].forEach((topic, idx) => {
                     console.log(`published to ${chalk.green(topic)}`);
                     client.publish(topic, serializedObjectJsonString, {retain: true});
