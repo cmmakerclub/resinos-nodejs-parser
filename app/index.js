@@ -10,7 +10,7 @@ const moment = require('moment');
 // const MQTT_SUB_TOPIC = process.env.TARGET_BAUDRATE)
 const CONFIG = {
     MQTT: {
-        SUB_TOPIC: process.env.MQTT_SUB_TOPIC,
+        SUB_TOPIC: process.env.MQTT_SUB_TOPIC || "NAT/espnow/test",
         PUB_TOPIC: process.env.MQTT_PUB_TOPIC
     }
 };
