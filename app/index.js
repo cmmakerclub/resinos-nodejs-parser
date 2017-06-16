@@ -2,7 +2,7 @@
 
 const CONFIG = {
     MQTT: {
-        SUB_TOPIC: process.env.MQTT_SUB_TOPIC || "NAT/espnow/test",
+        SUB_TOPIC: process.env.MQTT_SUB_TOPIC || "NAT/test/espnow",
         PUB_TOPIC: process.env.MQTT_PUB_TOPIC,
         HOST: process.env.MQTT_HOST || "mqtt.cmmc.io"
     }
@@ -28,21 +28,23 @@ let checksum = (message) => {
 };
 
 client.on('connect', function() {
-    console.log(`mqtt connected.`);
+    console.log(`mqtt connected being subscribed to ${CONFIG.MQTT.SUB_TOPIC}`);
     client.subscribe(CONFIG.MQTT.SUB_TOPIC);
 });
 
 client.on('message', function(topic, message) {
     console.log('================');
-    if (message[message.length - 1] === 0x0d) {
-        message = message.slice(0, message.length - 1);
+    console.log(`orig message =     `, message);
+
+    // rhythm 0d 0a $
+    if (message[message.length - 2] === 0x0d) {
+        message = message.slice(0, message.length - 2);
     }
 
-    // console.log(message);
-    // console.log('================');
-    // console.log(message.length);
+    console.log(`message =          `, message);
 
     let statusObject = {};
+    // TODO: checksum
     if (checksum(message)) {
         let mac1, mac2;
         if (message[0] === 0xfc && message[1] === 0xfd) {
@@ -96,6 +98,9 @@ client.on('message', function(topic, message) {
             }
         }
     } else {
+        console.log(message);
+        console.log('================');
+        console.log(message.length);
         console.log('invalid checksum');
     }
 });
