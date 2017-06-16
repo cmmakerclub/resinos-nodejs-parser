@@ -37,7 +37,7 @@ client.on('message', function(topic, message) {
     console.log(`==================================`);
     console.log(`orig message = `, message);
 
-    // rhythm 0d 0a $
+    // rhythm 0xd0xa$
     if (message[message.length - 2] === 0x0d) {
         message = message.slice(0, message.length - 2);
     }
@@ -45,7 +45,6 @@ client.on('message', function(topic, message) {
     console.log(`     message = `, message);
 
     let statusObject = {};
-    // TODO: checksum
     if (checksum(message)) {
         let mac1, mac2;
         if (message[0] === 0xfc && message[1] === 0xfd) {
