@@ -33,7 +33,7 @@ client.on('connect', function() {
 });
 
 client.on('message', function(topic, message) {
-    console.log('================');
+    console.log(`==================================`)
     console.log(`orig message =     `, message);
 
     // rhythm 0d 0a $
@@ -69,6 +69,7 @@ client.on('message', function(topic, message) {
                     payload.readUInt32LE(23) || 0
                 ];
 
+                console.log(`==================================`)
                 console.log(`type = `, type);
                 console.log(`name = `, name.toString());
                 console.log(`val1 = `, val1);
@@ -77,6 +78,7 @@ client.on('message', function(topic, message) {
                 console.log(`batt = `, batt);
                 console.log(`[master] mac1 = `, mac1String);
                 console.log(`[ slave] mac2 = `, mac2String);
+                console.log(`==================================`)
 
                 statusObject.myName = name.toString();
                 statusObject.type = type.toString('hex');
@@ -89,10 +91,16 @@ client.on('message', function(topic, message) {
                 statusObject.mac2 = mac2String;
                 statusObject.updated = moment().unix().toString();
                 statusObject.updatedText = moment().format('MMMM Do YYYY, h:mm:ss a');
+                let serializedObjectJsonString = JSON.stringify(statusObject);
 
-                client.publish(`CMMC/espnow/${mac1String}/${mac2String}/batt`, batt.toString(), {retain: true});
-                client.publish(`CMMC/espnow/${mac1String}/${mac2String}/status`, JSON.stringify(statusObject), {retain: true});
-                client.publish(`CMMC/espnow/${mac1String}/${name.toString()}/status`, JSON.stringify(statusObject), {retain: true});
+                console.log(chalk.bold(`being published..`));
+                let pubTopics = [
+                    `CMMC/espnow/${mac1String}/${mac2String}/status`,
+                    `CMMC/espnow/${mac1String}/${name.toString()}/status`
+                ].forEach((topic, idx) => {
+                    console.log(`published to ${chalk.green(topic)}`);
+                    client.publish(topic, serializedObjectJsonString, {retain: true});
+                });
             } else {
                 console.log('invalid header');
             }
@@ -100,8 +108,11 @@ client.on('message', function(topic, message) {
     } else {
         console.log(message);
         console.log('================');
+        console.log('================');
         console.log(message.length);
         console.log('invalid checksum');
+        console.log('================');
+        console.log('================');
     }
 });
 
