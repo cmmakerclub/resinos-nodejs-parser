@@ -35,14 +35,14 @@ client.on('connect', function() {
 
 client.on('message', function(topic, message) {
     console.log(`==================================`);
-    console.log(`orig message =     `, message);
+    console.log(`orig message = `, message);
 
     // rhythm 0d 0a $
     if (message[message.length - 2] === 0x0d) {
         message = message.slice(0, message.length - 2);
     }
 
-    console.log(`message =          `, message);
+    console.log(`     message = `, message);
 
     let statusObject = {};
     // TODO: checksum
