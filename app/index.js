@@ -1,19 +1,20 @@
 #!/bin/env node
 
+const CONFIG = {
+    MQTT: {
+        SUB_TOPIC: process.env.MQTT_SUB_TOPIC || "NAT/espnow/test",
+        PUB_TOPIC: process.env.MQTT_PUB_TOPIC,
+        HOST: process.env.MQTT_HOST || "mqtt.cmmc.io"
+    }
+};
+
 const chalk = require('chalk');
 console.log(`Hello world ${new Date()}`);
 
 const mqtt = require('mqtt');
-const client = mqtt.connect('mqtt://mqtt.cmmc.io');
+const client = mqtt.connect(`mqtt://${CONFIG.MQTT.HOST}`);
 const moment = require('moment');
 
-// const MQTT_SUB_TOPIC = process.env.TARGET_BAUDRATE)
-const CONFIG = {
-    MQTT: {
-        SUB_TOPIC: process.env.MQTT_SUB_TOPIC || "NAT/espnow/test",
-        PUB_TOPIC: process.env.MQTT_PUB_TOPIC
-    }
-};
 
 let checksum = (message) => {
     let calculatedSum = 0;
