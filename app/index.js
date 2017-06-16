@@ -13,8 +13,7 @@ let checksum = (message) => {
     let calculatedSum = 0;
     let checkSum = message[message.length - 1];
     for (let i = 0; i < message.length - 1; i++) {
-        let v = message[i];
-        calculatedSum ^= v;
+        calculatedSum ^= message[i];
     }
     console.log(`calculated sum = ${calculatedSum.toString(16)}`);
     console.log(`check sum = ${checkSum.toString(16)}`);
