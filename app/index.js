@@ -2,8 +2,8 @@
 
 const CONFIG = {
     MQTT: {
-        SUB_TOPIC: process.env.MQTT_SUB_TOPIC || "NAT/test/espnow",
-        PUB_PREFIX: process.env.MQTT_PUB_PREFIX || "ESPNOW/",
+        SUB_TOPIC: process.env.MQTT_SUB_TOPIC || "CMMC/nat/espnow",
+        PUB_PREFIX: process.env.MQTT_PUB_PREFIX || "ESPNOW",
         PUB_TOPIC: process.env.MQTT_PUB_TOPIC,
         HOST: process.env.MQTT_HOST || "mqtt.cmmc.io"
     }
