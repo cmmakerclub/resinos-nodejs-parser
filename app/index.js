@@ -10,12 +10,12 @@ const CONFIG = {
 };
 
 const chalk = require('chalk');
-console.log(`Hello world ${new Date()}`);
-
 const mqtt = require('mqtt');
 const client = mqtt.connect(`mqtt://${CONFIG.MQTT.HOST}`);
 const moment = require('moment');
+const _ = require('underscore');
 
+console.log(`Hello world ${new Date()}`);
 
 let checksum = (message) => {
     let calculatedSum = 0;
@@ -69,28 +69,32 @@ client.on('message', function(topic, message) {
                     payload.readUInt32LE(23) || 0
                 ];
 
+                _.extend(statusObject, {
+                    myName: name.toString(),
+                    type: type.toString('hex'),
+                    sensor: type.toString('hex'),
+                    val1: parseInt(val1.toString()),
+                    val2: parseInt(val2.toString()),
+                    val3: parseInt(val3.toString()),
+                    batt: parseInt(batt.toString()),
+                    mac1: mac1String,
+                    mac2: mac2String,
+                    updated: moment().unix().toString(),
+                    updatedText: moment().format('MMMM Do YYYY, h:mm:ss a')
+                });
+
+
                 console.log(`==================================`);
-                console.log(`type = `, type);
-                console.log(`name = `, name.toString());
-                console.log(`val1 = `, val1);
-                console.log(`val2 = `, val2);
-                console.log(`val3 = `, val3);
-                console.log(`batt = `, batt);
-                console.log(`[master] mac1 = `, mac1String);
-                console.log(`[ slave] mac2 = `, mac2String);
+                console.log(`type = `, statusObject.type);
+                console.log(`name = `, statusObject.name);
+                console.log(`val1 = `, statusObject.val1);
+                console.log(`val2 = `, statusObject.val2);
+                console.log(`val3 = `, statusObject.val3);
+                console.log(`batt = `, statusObject.batt);
+                console.log(`[master] mac1 = `, statusObject.mac1);
+                console.log(`[ slave] mac2 = `, statusObject.mac2);
                 console.log(`==================================`);
 
-                statusObject.myName = name.toString();
-                statusObject.type = type.toString('hex');
-                statusObject.sensor = type.toString('hex');
-                statusObject.val1 = parseInt(val1.toString());
-                statusObject.val2 = parseInt(val2.toString());
-                statusObject.val3 = parseInt(val3.toString());
-                statusObject.batt = parseInt(batt.toString());
-                statusObject.mac1 = mac1String;
-                statusObject.mac2 = mac2String;
-                statusObject.updated = moment().unix().toString();
-                statusObject.updatedText = moment().format('MMMM Do YYYY, h:mm:ss a');
                 let serializedObjectJsonString = JSON.stringify(statusObject);
 
                 console.log(chalk.bold(`being published..`));
