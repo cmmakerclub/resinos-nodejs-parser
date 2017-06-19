@@ -37,3 +37,24 @@ mosquitto_pub -t "CMMC/espnow/18fe34db4310/1afe34db3c64/status" -r -n -h mqtt.cm
 mosquitto_pub -t "CMMC/espnow/18fe34db4310/nat002/status" -r -n -h mqtt.cmmc.io -d
 mosquitto_pub -t "CMMC/espnow/18fe34db4310/5ecf7f09966f/status" -r -n -h mqtt.cmmc.io -d
 mosquitto_pub -t "CMMC/espnow/18fe34db4310/nat001/status" -r -n -h mqtt.cmmc.io -d
+mosquitto_pub -t "CMMC/espnow/18fe34ee81e3/1afe34daf20a/batt" -r -n -h mqtt.cmmc.io -d
+mosquitto_pub -t "CMMC/espnow/18fe34ee81e3/1afe34db3c64/batt" -r -n -h mqtt.cmmc.io -d
+mosquitto_pub -t "CMMC/espnow/18fe34ee81e3/1afe34daf49e/batt" -r -n -h mqtt.cmmc.io -d
+mosquitto_pub -t "CMMC/espnow/18fe34ee81e3/5ecf7f099a35/batt" -r -n -h mqtt.cmmc.io -d
+mosquitto_pub -t "CMMC/espnow/18fe34db3b98/1afe34eea0f9/batt" -r -n -h mqtt.cmmc.io -d
+mosquitto_pub -t "CMMC/espnow/18fe34db3b98/1afe34daf345/batt" -r -n -h mqtt.cmmc.io -d
+mosquitto_pub -t "CMMC/espnow/18fe34db3b98/5ecf7f09966f/batt" -r -n -h mqtt.cmmc.io -d
+mosquitto_pub -t "CMMC/espnow/18fe34db3b98/1afe34daf099/batt" -r -n -h mqtt.cmmc.io -d
+mosquitto_pub -t "CMMC/espnow/18fe34db3b98/1afe34eecd14/batt" -r -n -h mqtt.cmmc.io -d
+mosquitto_pub -t "CMMC/espnow/18fe34db3b98/1afe34daf20a/batt" -r -n -h mqtt.cmmc.io -d
+mosquitto_pub -t "CMMC/espnow/18fe34db3b98/1afe34db3c64/batt" -r -n -h mqtt.cmmc.io -d
+mosquitto_pub -t "CMMC/espnow/18fe34db3b98/18fe34db354e/batt" -r -n -h mqtt.cmmc.io -d
+mosquitto_pub -t "CMMC/espnow/18fe34db3b98/1afe34eecd2e/batt" -r -n -h mqtt.cmmc.io -d
+mosquitto_pub -t "CMMC/espnow/18fe34db3b98/5ccf7f09cb3f/batt" -r -n -h mqtt.cmmc.io -d
+mosquitto_pub -t "CMMC/espnow/18fe34db4310/1afe34daf099/batt" -r -n -h mqtt.cmmc.io -d
+
+mosquitto_pub -t "CMMC/espnow/18fe34db4310/1afe34db3c64/batt" -r -n -h mqtt.cmmc.io -d
+mosquitto_pub -t "CMMC/espnow/18fe34db4310/5ecf7f09966f/batt" -r -n -h mqtt.cmmc.io -d
+
+
+

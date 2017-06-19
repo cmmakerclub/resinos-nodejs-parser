@@ -104,9 +104,9 @@ client.on('message', function(topic, message) {
 
                 let serializedObjectJsonString = JSON.stringify(statusObject);
                 let pubTopics = [
-                    `${CONFIG.MQTT.PUB_PREFIX}${mac1String}/${mac2String}/status`,
+                    `${CONFIG.MQTT.PUB_PREFIX}/${mac1String}/${mac2String}/status`,
                     `${CONFIG.MQTT.PUB_PREFIX}/raw/${mac1String}/${mac2String}/status`,
-                    `${CONFIG.MQTT.PUB_PREFIX}${mac1String}/${name.toString()}/status`
+                    `${CONFIG.MQTT.PUB_PREFIX}/${mac1String}/${name.toString()}/status`
                 ].forEach((topic, idx) => {
                     client.publish(topic, serializedObjectJsonString, {retain: false});
                 });
