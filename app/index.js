@@ -15,7 +15,6 @@ const client = mqtt.connect(`mqtt://${CONFIG.MQTT.HOST}`);
 const moment = require('moment-timezone');
 const _ = require('underscore');
 
-console.log(`Hello world ${new Date()}`);
 
 let hexChar = (b) => b.toString(16);
 let checksum = (message) => {
@@ -79,7 +78,7 @@ client.on('message', function(topic, message) {
 
                 _.extend(statusObject, {
                     myName: name.toString(),
-                    type: type.toString('hex'),
+                      type: type.toString('hex'),
                     sensor: type.toString('hex'),
                     val1: parseInt(val1.toString()),
                     val2: parseInt(val2.toString()),
@@ -126,5 +125,5 @@ client.on('message', function(topic, message) {
     }
 });
 
-console.log('started');
+console.log(`Application started ${moment().tz('Asia/Bangkok')}`);
 
