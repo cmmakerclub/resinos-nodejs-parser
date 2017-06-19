@@ -1,0 +1,19 @@
+Client mosqsub/10248-Nats-MacB sending CONNECT
+Client mosqsub/10248-Nats-MacB received CONNACK
+Client mosqsub/10248-Nats-MacB sending SUBSCRIBE (Mid: 1, Topic: CMMC/espnow/+/+/status, QoS: 0)
+Client mosqsub/10248-Nats-MacB received SUBACK
+Subscribed (mid: 1): 0
+Client mosqsub/10248-Nats-MacB received PUBLISH (d0, q0, r1, m0, 'CMMC/espnow/18fe34ee81e3/1afe34daf20a/status', ... (211 bytes))
+CMMC/espnow/18fe34ee81e3/1afe34daf20a/status {"myName":"abc001","type":"010102","sensor":"010102","val1":"0","val2":"106","val3":"0","batt":"4431","mac1":"18fe34ee81e3","mac2":"1afe34daf20a","updated":"1496155211","updatedText":"May 30th 2017, 9:40:11 pm"}
+Client mosqsub/10248-Nats-MacB received PUBLISH (d0, q0, r1, m0, 'CMMC/espnow/18fe34db4310/1afe34daf099/status', ... (208 bytes))
+CMMC/espnow/18fe34db4310/1afe34daf099/status {"myName":"tst901","type":"010103","sensor":"010103","val1":2800,"val2":3700,"val3":0,"batt":1308,"mac1":"18fe34db4310","mac2":"1afe34daf099","updated":"1497845159","updatedText":"June 19th 2017, 4:05:59 am"}
+Client mosqsub/10248-Nats-MacB received PUBLISH (d0, q0, r1, m0, 'CMMC/espnow/18fe34db4310/tst901/status', ... (208 bytes))
+CMMC/espnow/18fe34db4310/tst901/status {"myName":"tst901","type":"010103","sensor":"010103","val1":2800,"val2":3700,"val3":0,"batt":1308,"mac1":"18fe34db4310","mac2":"1afe34daf099","updated":"1497845159","updatedText":"June 19th 2017, 4:05:59 am"}
+Client mosqsub/10248-Nats-MacB received PUBLISH (d0, q0, r1, m0, 'CMMC/espnow/18fe34db4310/1afe34db3c64/status', ... (208 bytes))
+CMMC/espnow/18fe34db4310/1afe34db3c64/status {"myName":"nat002","type":"010103","sensor":"010103","val1":2900,"val2":7500,"val3":0,"batt":1549,"mac1":"18fe34db4310","mac2":"1afe34db3c64","updated":"1497845134","updatedText":"June 19th 2017, 4:05:34 am"}
+Client mosqsub/10248-Nats-MacB received PUBLISH (d0, q0, r1, m0, 'CMMC/espnow/18fe34db4310/nat002/status', ... (208 bytes))
+CMMC/espnow/18fe34db4310/nat002/status {"myName":"nat002","type":"010103","sensor":"010103","val1":2900,"val2":7500,"val3":0,"batt":1549,"mac1":"18fe34db4310","mac2":"1afe34db3c64","updated":"1497845134","updatedText":"June 19th 2017, 4:05:34 am"}
+Client mosqsub/10248-Nats-MacB received PUBLISH (d0, q0, r0, m0, 'CMMC/espnow/18fe34db4310/5ecf7f09966f/status', ... (208 bytes))
+CMMC/espnow/18fe34db4310/5ecf7f09966f/status {"myName":"nat001","type":"010103","sensor":"010103","val1":2800,"val2":7200,"val3":0,"batt":1518,"mac1":"18fe34db4310","mac2":"5ecf7f09966f","updated":"1497845164","updatedText":"June 19th 2017, 4:06:04 am"}
+Client mosqsub/10248-Nats-MacB received PUBLISH (d0, q0, r0, m0, 'CMMC/espnow/18fe34db4310/nat001/status', ... (208 bytes))
+CMMC/espnow/18fe34db4310/nat001/status {"myName":"nat001","type":"010103","sensor":"010103","val1":2800,"val2":7200,"val3":0,"batt":1518,"mac1":"18fe34db4310","mac2":"5ecf7f09966f","updated":"1497845164","updatedText":"June 19th 2017, 4:06:04 am"}

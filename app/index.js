@@ -12,19 +12,20 @@ const CONFIG = {
 const chalk = require('chalk');
 const mqtt = require('mqtt');
 const client = mqtt.connect(`mqtt://${CONFIG.MQTT.HOST}`);
-const moment = require('moment');
+const moment = require('moment-timezone');
 const _ = require('underscore');
 
 console.log(`Hello world ${new Date()}`);
 
+let hexChar = (b) => b.toString(16);
 let checksum = (message) => {
     let calculatedSum = 0;
     let checkSum = message[message.length - 1];
     for (let i = 0; i < message.length - 1; i++) {
         calculatedSum ^= message[i];
     }
-    console.log(`calculated sum = ${calculatedSum.toString(16)}`);
-    console.log(`check sum = ${checkSum.toString(16)}`);
+    console.log(`calculated sum = ${chalk.yellow(hexChar(calculatedSum))}`);
+    console.log(`     check sum = ${chalk.green (hexChar(calculatedSum))}`);
     return calculatedSum === checkSum;
 };
 
@@ -33,30 +34,35 @@ client.on('connect', function() {
     client.subscribe(CONFIG.MQTT.SUB_TOPIC);
 });
 
+client.on('packetsend', function(packet) {
+    // console.log(`packetsend`, packet);
+    if (packet.cmd === 'publish') {
+        console.log(`published to ${chalk.green(packet.topic)}`);
+    }
+    else if (packet.cmd === 'subscribe') {
+        console.log(`send subscriptions to ${chalk.green(JSON.stringify(packet.subscriptions))}`);
+    }
+});
+
 client.on('message', function(topic, message) {
     console.log(`==================================`);
-    console.log(`orig message = `, message);
+    // console.log(`orig message = `, message);
 
     // rhythm 0xd0xa$
     if (message[message.length - 2] === 0x0d) {
         message = message.slice(0, message.length - 2);
     }
-
-    console.log(`     message = `, message);
+    // console.log(`     message = `, message);
 
     let statusObject = {};
     if (checksum(message)) {
         let mac1, mac2;
         if (message[0] === 0xfc && message[1] === 0xfd) {
-            console.log(message);
             mac1 = message.slice(2, 2 + 6);
             mac2 = message.slice(2 + 6, 2 + 6 + 6);
             let len = message[2 + 6 + 6];
             let payload = message.slice(2 + 6 + 6 + 1, message.length - 1);
-            console.log(`len = ${len}, payload = ${payload.toString('hex')}`);
-            // if (checksum(payload)) {
-            //   console.log('YAY!')
-            // }
+            console.log(`len = ${chalk.cyan(len)}, payload = ${chalk.cyan(payload.toString('hex'))}`);
             if (payload[0] === 0xff && payload[1] === 0xfa) {
                 let type = payload.slice(2, 5);
                 let name = payload.slice(5, 11);
@@ -80,7 +86,7 @@ client.on('message', function(topic, message) {
                     mac1: mac1String,
                     mac2: mac2String,
                     updated: moment().unix().toString(),
-                    updatedText: moment().format('MMMM Do YYYY, h:mm:ss a')
+                    updatedText: moment().tz('Asia/Bangkok').format('DD/MMMM/YYYY, hh:mm:ss a')
                 });
 
 
@@ -96,14 +102,11 @@ client.on('message', function(topic, message) {
                 console.log(`==================================`);
 
                 let serializedObjectJsonString = JSON.stringify(statusObject);
-
-                console.log(chalk.bold(`being published..`));
                 let pubTopics = [
                     `${CONFIG.MQTT.PUB_PREFIX}${mac1String}/${mac2String}/status`,
                     `${CONFIG.MQTT.PUB_PREFIX}${mac1String}/${name.toString()}/status`
                 ].forEach((topic, idx) => {
-                    console.log(`published to ${chalk.green(topic)}`);
-                    client.publish(topic, serializedObjectJsonString, {retain: true});
+                    client.publish(topic, serializedObjectJsonString, {retain: false});
                 });
             } else {
                 console.log('invalid header');
