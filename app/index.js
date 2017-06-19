@@ -25,7 +25,7 @@ let checksum = (message) => {
         calculatedSum ^= message[i];
     }
     console.log(`calculated sum = ${chalk.yellow(hexChar(calculatedSum))}`);
-    console.log(`     check sum = ${chalk.green (hexChar(calculatedSum))}`);
+    console.log(`     check sum = ${chalk.green(hexChar(calculatedSum))}`);
     return calculatedSum === checkSum;
 };
 
@@ -56,12 +56,13 @@ client.on('message', function(topic, message) {
 
     let statusObject = {};
     if (checksum(message)) {
-        let mac1, mac2;
         if (message[0] === 0xfc && message[1] === 0xfd) {
-            mac1 = message.slice(2, 2 + 6);
-            mac2 = message.slice(2 + 6, 2 + 6 + 6);
+            let mac1, mac2;
             let len = message[2 + 6 + 6];
             let payload = message.slice(2 + 6 + 6 + 1, message.length - 1);
+            mac1 = message.slice(2, 2 + 6);
+            mac2 = message.slice(2 + 6, 2 + 6 + 6);
+
             console.log(`len = ${chalk.cyan(len)}, payload = ${chalk.cyan(payload.toString('hex'))}`);
             if (payload[0] === 0xff && payload[1] === 0xfa) {
                 let type = payload.slice(2, 5);
