@@ -63,8 +63,9 @@ client.on('message', function(topic, message) {
             mac1 = message.slice(2, 2 + 6);
             mac2 = message.slice(2 + 6, 2 + 6 + 6);
 
-            console.log(`len = ${chalk.cyan(len)}, payload = ${chalk.cyan(payload.toString('hex'))}`);
             if (payload[0] === 0xff && payload[1] === 0xfa) {
+                let _payload = payload.slice(2).toString('hex');
+                console.log(`len = ${chalk.cyan(len)}, payload = ${chalk.yellow(`fffa`)}${chalk.cyan(_payload)}`);
                 let type = payload.slice(2, 5);
                 let name = payload.slice(5, 11);
                 let mac1String = mac1.toString('hex');
